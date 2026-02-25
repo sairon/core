@@ -71,21 +71,21 @@ jobs:
               exit 1
           fi
 
-      - name: Download Translations
-        run: python3 -m script.translations download
-        env:
-          LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
-
-      - name: Archive translations
-        shell: bash
-        run: find ./homeassistant/components/*/translations -name "*.json" | tar zcvf translations.tar.gz -T -
-
-      - name: Upload translations
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
-        with:
-          name: translations
-          path: translations.tar.gz
-          if-no-files-found: error
+      # - name: Download Translations
+      #   run: python3 -m script.translations download
+      #   env:
+      #     LOKALISE_TOKEN: ${{ secrets.LOKALISE_TOKEN }}
+      #
+      # - name: Archive translations
+      #   shell: bash
+      #   run: find ./homeassistant/components/*/translations -name "*.json" | tar zcvf translations.tar.gz -T -
+      #
+      # - name: Upload translations
+      #   uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      #   with:
+      #     name: translations
+      #     path: translations.tar.gz
+      #     if-no-files-found: error
 
   build_base:
     name: Build ${{ matrix.arch }} base core image
@@ -182,15 +182,15 @@ jobs:
             sed -i "s|home-assistant-intents==.*||" requirements_all.txt requirements.txt
           fi
 
-      - name: Download translations
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
-        with:
-          name: translations
+      # - name: Download translations
+      #   uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+      #   with:
+      #     name: translations
 
-      - name: Extract translations
-        run: |
-          tar xvf translations.tar.gz
-          rm translations.tar.gz
+      # - name: Extract translations
+      #   run: |
+      #     tar xvf translations.tar.gz
+      #     rm translations.tar.gz
 
       - name: Write meta info file
         shell: bash
