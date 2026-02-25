@@ -253,7 +253,7 @@ jobs:
           cache-from: ${{ steps.cache.outcome == 'success' && steps.vars.outputs.cache_image || '' }}
           build-args: |
             BUILD_FROM=${{ steps.vars.outputs.base_image }}
-          tags: ${{ DOCKER_IMAGE_REPO }}/${{ matrix.arch }}-homeassistant:${{ needs.init.outputs.version }}
+          tags: ${{ env.DOCKER_IMAGE_REPO }}/${{ matrix.arch }}-homeassistant:${{ needs.init.outputs.version }}
           outputs: type=image,push=true,compression=zstd,compression-level=9,force-compression=true,oci-mediatypes=true
           labels: |
             io.hass.arch=${{ matrix.arch }}
