@@ -222,25 +222,25 @@ jobs:
           echo "cache_image=${DOCKER_IMAGE_REPO}/${ARCH}-homeassistant:latest" >> "$GITHUB_OUTPUT"
           echo "created=$(date --rfc-3339=seconds --utc)" >> "$GITHUB_OUTPUT"
 
-      - name: Verify base image signature
-        env:
-          BASE_IMAGE: ${{ steps.vars.outputs.base_image }}
-        run: |
-          cosign verify \
-            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-            --certificate-identity-regexp "https://github.com/home-assistant/docker/.*" \
-            "${BASE_IMAGE}"
+      # - name: Verify base image signature
+      #   env:
+      #     BASE_IMAGE: ${{ steps.vars.outputs.base_image }}
+      #   run: |
+      #     cosign verify \
+      #       --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+      #       --certificate-identity-regexp "https://github.com/home-assistant/docker/.*" \
+      #       "${BASE_IMAGE}"
 
-      - name: Verify cache image signature
-        id: cache
-        continue-on-error: true
-        env:
-          CACHE_IMAGE: ${{ steps.vars.outputs.cache_image }}
-        run: |
-          cosign verify \
-            --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-            --certificate-identity-regexp "https://github.com/home-assistant/core/.*" \
-            "${CACHE_IMAGE}"
+      # - name: Verify cache image signature
+      #   id: cache
+      #   continue-on-error: true
+      #   env:
+      #     CACHE_IMAGE: ${{ steps.vars.outputs.cache_image }}
+      #   run: |
+      #     cosign verify \
+      #       --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+      #       --certificate-identity-regexp "https://github.com/home-assistant/core/.*" \
+      #       "${CACHE_IMAGE}"
 
       - name: Build base image
         id: build
@@ -261,13 +261,13 @@ jobs:
             org.opencontainers.image.created=${{ steps.vars.outputs.created }}
             org.opencontainers.image.version=${{ needs.init.outputs.version }}
 
-      - name: Sign image
-        env:
-          ARCH: ${{ matrix.arch }}
-          VERSION: ${{ needs.init.outputs.version }}
-          DIGEST: ${{ steps.build.outputs.digest }}
-        run: |
-          cosign sign --yes "${DOCKER_IMAGE_REPO}/${ARCH}-homeassistant:${VERSION}@${DIGEST}"
+      # - name: Sign image
+      #   env:
+      #     ARCH: ${{ matrix.arch }}
+      #     VERSION: ${{ needs.init.outputs.version }}
+      #     DIGEST: ${{ steps.build.outputs.digest }}
+      #   run: |
+      #     cosign sign --yes "${DOCKER_IMAGE_REPO}/${ARCH}-homeassistant:${VERSION}@${DIGEST}"
 
   build_machine:
     name: Build ${{ matrix.machine }} machine core image
@@ -343,8 +343,8 @@ jobs:
           args: |
             $BUILD_ARGS \
             --target /data/machine \
-            --cosign \
-            --machine "${{ needs.init.outputs.version }}=${{ matrix.machine }}"
+            --no-cosign-verify \
+            --machine "${{ needs.init.outputs.version }}=${{ matrix.machine }}" \
 
 #  publish_ha:
 #    name: Publish version files
