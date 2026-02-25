@@ -218,8 +218,8 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}
         run: |
-          echo "base_image=${DOCKER_IMAGE_REPO}/${ARCH}-homeassistant-base:${BASE_IMAGE_VERSION}" >> "$GITHUB_OUTPUT"
-          echo "cache_image=${DOCKER_IMAGE_REPO}/${ARCH}-homeassistant:latest" >> "$GITHUB_OUTPUT"
+          echo "base_image=ghcr.io/home-assistant/${ARCH}-homeassistant-base:${BASE_IMAGE_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "cache_image=ghcr.io/home-assistant/${ARCH}-homeassistant:latest" >> "$GITHUB_OUTPUT"
           echo "created=$(date --rfc-3339=seconds --utc)" >> "$GITHUB_OUTPUT"
 
       # - name: Verify base image signature
