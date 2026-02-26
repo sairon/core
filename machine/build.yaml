@@ -1,7 +1,7 @@
-image: ghcr.io/home-assistant/{machine}-homeassistant
+image: ghcr.io/sairon/{machine}-homeassistant
 build_from:
-  aarch64: "ghcr.io/home-assistant/aarch64-homeassistant:"
-  amd64: "ghcr.io/home-assistant/amd64-homeassistant:"
+  aarch64: "ghcr.io/sairon/homeassistant/aarch64-homeassistant:"
+  amd64: "ghcr.io/sairon/homeassistant/amd64-homeassistant:"
 cosign:
   base_identity: https://github.com/home-assistant/core/.*
   identity: https://github.com/home-assistant/core/.*
